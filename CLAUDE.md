@@ -1,0 +1,1 @@
+﻿> ⚠️ BEFORE writing any code, read the relevant files in `read/` directory. See reference table below or in `read/workflow.md`.

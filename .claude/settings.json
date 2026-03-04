@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Read",
+      "Edit",
+      "Write",
+      "web_search",
+      "fetch",
+      "mcp__context7__*",
+      "mcp__playwright__*",
+      "mcp__stitch__*"
+    ]
+  }
+}
