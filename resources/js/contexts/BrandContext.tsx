@@ -66,9 +66,10 @@ export function BrandProvider({ children, globalSettings, user }: { children: Re
       document.documentElement.classList.toggle('dark', isDark);
       document.body.classList.toggle('dark', isDark);
       
-      // Apply layout direction (RTL/LTR)
-      document.documentElement.dir = updatedSettings.layoutDirection;
-      document.documentElement.setAttribute('dir', updatedSettings.layoutDirection);
+      // Apply layout direction (RTL/LTR) - layoutDirection 'left'/'right' maps to dir 'ltr'/'rtl'
+      const dir = updatedSettings.layoutDirection === 'right' ? 'rtl' : 'ltr';
+      document.documentElement.dir = dir;
+      document.documentElement.setAttribute('dir', dir);
     }
   }, [globalSettings, user]);
 

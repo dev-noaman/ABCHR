@@ -83,7 +83,28 @@ use App\Http\Controllers\YooKassaPaymentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', [LandingPageController::class, 'show'])->name('home');
+Route::get('/', function () {
+    return auth()->check()
+        ? redirect()->route('dashboard')
+        : redirect()->route('login');
+})->name('home');
+
+Route::get('/landing', [LandingPageController::class, 'show'])->name('landing');
+
+// DEBUG: Check which PHP extensions are loaded via web (remove after fixing installer)
+Route::get('/phpcheck', function () {
+    $required = ['openssl', 'pdo', 'mbstring', 'tokenizer', 'json', 'curl', 'fileinfo', 'gd', 'zip', 'xml'];
+    $loaded = get_loaded_extensions();
+    $status = [];
+    foreach ($required as $ext) {
+        $status[$ext] = extension_loaded($ext);
+    }
+    return response()->json([
+        'php_version' => PHP_VERSION,
+        'required_extensions' => $status,
+        'all_loaded' => array_values($loaded),
+    ], 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+});
 
 // Public form submission routes
 
@@ -355,6 +376,8 @@ Route::middleware(['auth', 'verified', 'setting'])->group(function () {
         Route::middleware('permission:manage-employees')->group(function () {
             Route::get('hr/employees', [EmployeeController::class, 'index'])->name('hr.employees.index');
             Route::get('hr/employees/create', [EmployeeController::class, 'create'])->middleware('permission:create-employees')->name('hr.employees.create');
+            Route::get('hr/employees/template', [EmployeeController::class, 'downloadTemplate'])->middleware('permission:create-employees')->name('hr.employees.template');
+            Route::post('hr/employees/bulk-import', [EmployeeController::class, 'bulkImport'])->middleware('permission:create-employees')->name('hr.employees.bulk-import');
             Route::post('hr/employees', [EmployeeController::class, 'store'])->middleware('permission:create-employees')->name('hr.employees.store');
             Route::get('hr/employees/{employee}', [EmployeeController::class, 'show'])->middleware('permission:view-employees')->name('hr.employees.show');
             Route::get('hr/employees/{employee}/edit', [EmployeeController::class, 'edit'])->middleware('permission:edit-employees')->name('hr.employees.edit');
@@ -975,7 +998,7 @@ Route::middleware(['auth', 'verified', 'setting'])->group(function () {
             Route::post('hr/leave-applications', [\App\Http\Controllers\LeaveApplicationController::class, 'store'])->middleware('permission:create-leave-applications')->name('hr.leave-applications.store');
             Route::put('hr/leave-applications/{leaveApplication}', [\App\Http\Controllers\LeaveApplicationController::class, 'update'])->middleware('permission:edit-leave-applications')->name('hr.leave-applications.update');
             Route::delete('hr/leave-applications/{leaveApplication}', [\App\Http\Controllers\LeaveApplicationController::class, 'destroy'])->middleware('permission:delete-leave-applications')->name('hr.leave-applications.destroy');
-            Route::put('hr/leave-applications/{leaveApplication}/status', [\App\Http\Controllers\LeaveApplicationController::class, 'updateStatus'])->middleware('permission:approve-leave-applications')->name('hr.leave-applications.update-status');
+
         });
 
         // Leave Balances routes

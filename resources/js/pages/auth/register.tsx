@@ -141,7 +141,7 @@ export default function Register({ referralCode, planId }: { referralCode?: stri
                     <Label htmlFor="terms" className="ml-2 text-sm text-gray-600">
                         {t("I agree to the")}{' '}
                         <a 
-                            href={termsConditionsUrl || route('home')} 
+                            href={termsConditionsUrl || route('landing')} 
                             target="_blank" 
                             rel="noopener noreferrer" 
                             style={{ color: primaryColor }} 

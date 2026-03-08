@@ -49,24 +49,26 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        // Define available routes with their permissions
+        // Define available routes with their permissions (order matters)
         $routes = [
             ['route' => 'users.index', 'permission' => 'manage-users'],
             ['route' => 'roles.index', 'permission' => 'manage-roles'],
-
             ['route' => 'plans.index', 'permission' => 'manage-plans'],
             ['route' => 'referral.index', 'permission' => 'manage-referral'],
             ['route' => 'settings.index', 'permission' => 'manage-settings'],
+            // HR fallbacks for company users
+            ['route' => 'hr.leave-types.index', 'permission' => 'manage-leave-types'],
+            ['route' => 'hr.employees.index', 'permission' => 'manage-employees'],
+            ['route' => 'hr.branches.index', 'permission' => 'manage-branches'],
+            ['route' => 'hr.departments.index', 'permission' => 'manage-departments'],
         ];
 
-        // Find first available route
         foreach ($routes as $routeData) {
             if ($user->hasPermissionTo($routeData['permission'])) {
                 return redirect()->route($routeData['route']);
             }
         }
 
-        // If no permissions found, logout user
         auth()->logout();
         return redirect()->route('login')->with('error', __('No access permissions found.'));
     }

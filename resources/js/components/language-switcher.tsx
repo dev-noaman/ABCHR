@@ -144,18 +144,12 @@ export function LanguageSwitcher() {
                 await i18n.changeLanguage(languageCode);
 
                 const isRtl = rtlLanguages.includes(languageCode);
-                let newDirection;
+                // When switching to LTR (e.g. English), always use 'left' so RTL doesn't persist from Arabic
+                const newDirection = isRtl ? 'right' : 'left';
 
-                if (isDemoMode()) {
-                    // In demo mode, set direction to right for RTL languages, otherwise preserve current
-                    newDirection = isRtl ? 'right' : (getCookie('layoutPosition') || 'left');
-                } else {
-                    // Get from database via globalSettings
-                    newDirection = isRtl ? 'right' : (globalSettings?.layoutDirection || 'left');
-                }
-
-                document.documentElement.dir = 'ltr';
-                document.documentElement.setAttribute('dir', 'ltr');
+                const dir = isRtl ? 'rtl' : 'ltr';
+                document.documentElement.dir = dir;
+                document.documentElement.setAttribute('dir', dir);
 
                 updatePosition(newDirection as 'left' | 'right');
 
@@ -167,19 +161,17 @@ export function LanguageSwitcher() {
                     }, {
                         preserveScroll: true,
                         onSuccess: () => {
-                            // After language is saved, update layoutDirection if RTL
-                            if (isRtl || (!isRtl && globalSettings?.layoutDirection === 'right')) {
-                                router.post(route('settings.brand.update'), {
-                                    settings: {
-                                        layoutDirection: newDirection
-                                    }
-                                }, {
-                                    preserveScroll: true,
-                                    onError: (errors) => {
-                                        console.error('Failed to update layout direction:', errors);
-                                    }
-                                });
-                            }
+                            // Always persist layoutDirection when changing language (RTL->right, LTR->left)
+                            router.post(route('settings.brand.update'), {
+                                settings: {
+                                    layoutDirection: newDirection
+                                }
+                            }, {
+                                preserveScroll: true,
+                                onError: (errors) => {
+                                    console.error('Failed to update layout direction:', errors);
+                                }
+                            });
                         },
                         onError: (errors) => {
                             console.error('Failed to change language:', errors);

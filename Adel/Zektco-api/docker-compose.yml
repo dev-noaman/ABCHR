@@ -1,0 +1,52 @@
+name: zkteco
+
+services:
+  zkteco-api:
+    build: .
+    image: zkteco-api:latest
+    container_name: zkteco-api
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8001:8000"   # Dashboard on host:8001 (tunnel uses zkteco-api:8000 internally)
+    # Use extra_hosts on Windows/macOS for LAN access
+    # Use network_mode: host only on Linux servers
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - TZ=Asia/Qatar
+      - DB_FILE=/data/attendance.db
+      # - HR_API_URL=https://yourdomain.com/api/attendance/import
+      # - API_TOKEN=YOUR_API_TOKEN
+    volumes:
+      - zkteco-db:/data    # SQLite DB persists across restarts
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # Cloudflare Tunnel — exposes your app to the internet (dashboard-configured)
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    env_file: .env
+
+  # Quick tunnel — backup URL (run with: docker compose --profile quick up -d)
+  quick-tunnel:
+    profiles: [quick]
+    image: cloudflare/cloudflared:latest
+    container_name: zkteco-quick-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate --url http://zkteco-api:8000
+    depends_on:
+      - zkteco-api
+
+volumes:
+  zkteco-db:

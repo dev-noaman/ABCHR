@@ -203,6 +203,7 @@ class EmployeeController extends Controller
                     'email' => 'required|email|max:255|unique:users,email',
                     'password' => 'required|string|min:8',
                     'phone' => 'required|string|max:20',
+                    'personal_number' => 'required|string|max:20',
                     'date_of_birth' => 'required|date',
                     'gender' => 'required|in:male,female,other',
                     'profile_image' => 'required',
@@ -218,18 +219,18 @@ class EmployeeController extends Controller
                     'employee_status' => 'required|string|max:50',
 
                     // Contact information
-                    'address_line_1' => 'required|string|max:255',
-                    'address_line_2' => 'required|string|max:255',
-                    'city' => 'required|string|max:100',
-                    'state' => 'required|string|max:100',
-                    'country' => 'required|string|max:100',
-                    'postal_code' => 'required|string|max:20',
-                    'emergency_contact_name' => 'required|string|max:255',
-                    'emergency_contact_relationship' => 'required|string|max:100',
-                    'emergency_contact_number' => 'required|string|max:20',
+                    'address_line_1' => 'nullable|string|max:255',
+                    'address_line_2' => 'nullable|string|max:255',
+                    'city' => 'nullable|string|max:100',
+                    'state' => 'nullable|string|max:100',
+                    'country' => 'nullable|string|max:100',
+                    'postal_code' => 'nullable|string|max:20',
+                    'emergency_contact_name' => 'nullable|string|max:255',
+                    'emergency_contact_relationship' => 'nullable|string|max:100',
+                    'emergency_contact_number' => 'nullable|string|max:20',
 
                     // Banking information
-                    'bank_name' => 'required|string|max:255',
+                    'bank_name' => 'nullable|string|max:255',
                     'account_holder_name' => 'nullable|string|max:255',
                     'account_number' => 'nullable|string|max:50',
                     'bank_identifier_code' => 'nullable|string|max:50',
@@ -282,6 +283,7 @@ class EmployeeController extends Controller
                 $employee->employee_id = Employee::generateEmployeeId();
                 $employee->biometric_emp_id = $request->biometric_emp_id;
                 $employee->phone = $request->phone;
+                $employee->personal_number = $request->personal_number;
                 $employee->date_of_birth = $request->date_of_birth;
                 $employee->gender = $request->gender;
                 $employee->branch_id = $request->branch_id;
@@ -451,6 +453,7 @@ class EmployeeController extends Controller
                     'email' => 'required|email|max:255|unique:users,email,' . $employee->user_id,
                     'password' => 'nullable|string|min:8',
                     'phone' => 'required|string|max:20',
+                    'personal_number' => 'required|string|max:20',
                     'date_of_birth' => 'required|date',
                     'gender' => 'required|in:male,female,other',
                     'profile_image' => 'nullable|max:2048',
@@ -466,20 +469,20 @@ class EmployeeController extends Controller
                     'employee_status' => 'required|string|max:50',
 
                     // Contact information
-                    'address_line_1' => 'required|string|max:255',
-                    'address_line_2' => 'required|string|max:255',
-                    'city' => 'required|string|max:100',
-                    'state' => 'required|string|max:100',
-                    'country' => 'required|string|max:100',
-                    'postal_code' => 'required|string|max:20',
-                    'emergency_contact_name' => 'required|string|max:255',
-                    'emergency_contact_relationship' => 'required|string|max:100',
-                    'emergency_contact_number' => 'required|string|max:20',
+                    'address_line_1' => 'nullable|string|max:255',
+                    'address_line_2' => 'nullable|string|max:255',
+                    'city' => 'nullable|string|max:100',
+                    'state' => 'nullable|string|max:100',
+                    'country' => 'nullable|string|max:100',
+                    'postal_code' => 'nullable|string|max:20',
+                    'emergency_contact_name' => 'nullable|string|max:255',
+                    'emergency_contact_relationship' => 'nullable|string|max:100',
+                    'emergency_contact_number' => 'nullable|string|max:20',
 
                     // Banking information
-                    'bank_name' => 'required|string|max:255',
-                    'account_holder_name' => 'required|string|max:255',
-                    'account_number' => 'required|string|max:50',
+                    'bank_name' => 'nullable|string|max:255',
+                    'account_holder_name' => 'nullable|string|max:255',
+                    'account_number' => 'nullable|string|max:50',
                     'bank_identifier_code' => 'nullable|string|max:50',
                     'bank_branch' => 'nullable|string|max:255',
                     'tax_payer_id' => 'nullable|string|max:50',
@@ -520,6 +523,7 @@ class EmployeeController extends Controller
                 $employee->shift_id = $request->shift_id;
                 $employee->attendance_policy_id = $request->attendance_policy_id;
                 $employee->phone = $request->phone;
+                $employee->personal_number = $request->personal_number;
                 $employee->date_of_birth = $request->date_of_birth;
                 $employee->gender = $request->gender;
                 $employee->branch_id = $request->branch_id;

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { PageTemplate } from '@/components/page-template';
 import { usePage, router } from '@inertiajs/react';
-import { Plus, Clock, LogIn, LogOut } from 'lucide-react';
+import { Plus, Clock, LogIn, LogOut, MapPinOff } from 'lucide-react';
 import { hasPermission } from '@/utils/authorization';
 import { CrudTable } from '@/components/CrudTable';
 import { CrudFormModal } from '@/components/CrudFormModal';
@@ -11,6 +11,7 @@ import { toast } from '@/components/custom-toast';
 import { useTranslation } from 'react-i18next';
 import { Pagination } from '@/components/ui/pagination';
 import { SearchAndFilterBar } from '@/components/ui/search-and-filter-bar';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 export default function AttendanceRecords() {
   const { t } = useTranslation();
@@ -23,6 +24,7 @@ export default function AttendanceRecords() {
   const [selectedStatus, setSelectedStatus] = useState(pageFilters.status || 'all');
   const [dateFrom, setDateFrom] = useState(pageFilters.date_from || '');
   const [dateTo, setDateTo] = useState(pageFilters.date_to || '');
+  const [outsideLocation, setOutsideLocation] = useState(pageFilters.outside_location || 'all');
   const [showFilters, setShowFilters] = useState(false);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -31,12 +33,12 @@ export default function AttendanceRecords() {
 
   // Check if any filters are active
   const hasActiveFilters = () => {
-    return searchTerm !== '' || selectedEmployee !== 'all' || selectedStatus !== 'all' || dateFrom !== '' || dateTo !== '';
+    return searchTerm !== '' || selectedEmployee !== 'all' || selectedStatus !== 'all' || dateFrom !== '' || dateTo !== '' || outsideLocation !== 'all';
   };
 
   // Count active filters
   const activeFilterCount = () => {
-    return (searchTerm ? 1 : 0) + (selectedEmployee !== 'all' ? 1 : 0) + (selectedStatus !== 'all' ? 1 : 0) + (dateFrom ? 1 : 0) + (dateTo ? 1 : 0);
+    return (searchTerm ? 1 : 0) + (selectedEmployee !== 'all' ? 1 : 0) + (selectedStatus !== 'all' ? 1 : 0) + (dateFrom ? 1 : 0) + (dateTo ? 1 : 0) + (outsideLocation !== 'all' ? 1 : 0);
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -52,6 +54,7 @@ export default function AttendanceRecords() {
       status: selectedStatus !== 'all' ? selectedStatus : undefined,
       date_from: dateFrom || undefined,
       date_to: dateTo || undefined,
+      outside_location: outsideLocation !== 'all' ? outsideLocation : undefined,
       per_page: pageFilters.per_page
     }, { preserveState: true, preserveScroll: true });
   };
@@ -68,6 +71,7 @@ export default function AttendanceRecords() {
       status: selectedStatus !== 'all' ? selectedStatus : undefined,
       date_from: dateFrom || undefined,
       date_to: dateTo || undefined,
+      outside_location: outsideLocation !== 'all' ? outsideLocation : undefined,
       per_page: pageFilters.per_page
     }, { preserveState: true, preserveScroll: true });
   };
@@ -174,6 +178,7 @@ export default function AttendanceRecords() {
     setSelectedStatus('all');
     setDateFrom('');
     setDateTo('');
+    setOutsideLocation('all');
     setShowFilters(false);
 
     router.get(route('hr.attendance-records.index'), {
@@ -222,16 +227,45 @@ export default function AttendanceRecords() {
     {
       key: 'clock_in',
       label: t('Clock In'),
-      render: (value: string) => (
-
-        <span className="font-mono text-green-600">{window.appSettings.formatTime(value) || '-'}</span>
+      render: (value: string, row: any) => (
+        <div className="flex items-center gap-1.5">
+          <span className="font-mono text-green-600">{window.appSettings.formatTime(value) || '-'}</span>
+          {row.clock_in_outside_location && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="inline-flex items-center gap-0.5 rounded px-1 py-0.5 text-xs font-medium bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20 cursor-default">
+                    <MapPinOff className="h-3 w-3" />
+                    {t('Outside')}
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent>{t('Clocked in from outside an allowed location')}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </div>
       )
     },
     {
       key: 'clock_out',
       label: t('Clock Out'),
-      render: (value: string) => (
-        <span className="font-mono text-red-600">{window.appSettings.formatTime(value) || '-'}</span>
+      render: (value: string, row: any) => (
+        <div className="flex items-center gap-1.5">
+          <span className="font-mono text-red-600">{window.appSettings.formatTime(value) || '-'}</span>
+          {row.clock_out_outside_location && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className="inline-flex items-center gap-0.5 rounded px-1 py-0.5 text-xs font-medium bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20 cursor-default">
+                    <MapPinOff className="h-3 w-3" />
+                    {t('Outside')}
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent>{t('Clocked out from outside an allowed location')}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </div>
       )
     },
     {
@@ -358,6 +392,12 @@ export default function AttendanceRecords() {
     { value: 'holiday', label: t('Holiday') }
   ];
 
+  const outsideLocationOptions = [
+    { value: 'all', label: t('All Punches'), disabled: true },
+    { value: '1', label: t('Outside Location') },
+    { value: '0', label: t('Within Location') }
+  ];
+
   return (
     <PageTemplate
       title={t("Attendance Records")}
@@ -403,6 +443,14 @@ export default function AttendanceRecords() {
               type: 'date',
               value: dateTo,
               onChange: setDateTo
+            },
+            {
+              name: 'outside_location',
+              label: t('Location Status'),
+              type: 'select',
+              value: outsideLocation,
+              onChange: setOutsideLocation,
+              options: outsideLocationOptions
             }
           ]}
           showFilters={showFilters}
@@ -420,7 +468,8 @@ export default function AttendanceRecords() {
               employee_id: selectedEmployee !== 'all' ? selectedEmployee : undefined,
               status: selectedStatus !== 'all' ? selectedStatus : undefined,
               date_from: dateFrom || undefined,
-              date_to: dateTo || undefined
+              date_to: dateTo || undefined,
+              outside_location: outsideLocation !== 'all' ? outsideLocation : undefined
             }, { preserveState: true, preserveScroll: true });
           }}
         />

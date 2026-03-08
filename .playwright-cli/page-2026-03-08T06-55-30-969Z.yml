@@ -1,0 +1,218 @@
+- generic [active] [ref=e1]:
+  - heading "Attendance Logs" [level=1] [ref=e2]
+  - generic [ref=e3]: Auto-refreshing every 5 seconds. 28 attendance records in range.
+  - generic [ref=e4]:
+    - generic [ref=e5]: "From:"
+    - textbox "From:" [ref=e6]: 2026-03-01
+    - generic [ref=e7]: "To:"
+    - textbox "To:" [ref=e8]: 2026-03-08
+    - generic [ref=e9]: "Staff:"
+    - combobox "Staff:" [ref=e10]:
+      - option "All staff" [selected]
+      - option "133 (133)"
+      - option "37 (37)"
+      - option "42 (42)"
+      - option "43 (43)"
+      - option "Adel (104)"
+      - option "Ahassoun (5)"
+      - option "Andrea (110)"
+      - option "Atef (27)"
+      - option "Charisma (106)"
+      - option "Farah (102)"
+      - option "Fathima (109)"
+      - option "Hana (107)"
+      - option "Jaherul (117)"
+      - option "Jassim (2)"
+      - option "Kathlyn (114)"
+      - option "Mahbour (119)"
+      - option "Mahfoudh (7)"
+      - option "Mahfuz (122)"
+      - option "Mazen (105)"
+      - option "Mdrasil (40)"
+      - option "Najwa (108)"
+      - option "Rasel (4)"
+      - option "Sabrine (3)"
+      - option "Waled (6)"
+      - option "Walid (1)"
+      - option "Walidnew (41)"
+      - option "Waliur (120)"
+    - generic [ref=e11] [cursor=pointer]:
+      - checkbox "Only days with punches" [checked] [ref=e12]
+      - text: Only days with punches
+  - table [ref=e13]:
+    - rowgroup [ref=e14]:
+      - row "Staff ID Staff Name Date Check-in Check-out" [ref=e15]:
+        - columnheader "Staff ID" [ref=e16]
+        - columnheader "Staff Name" [ref=e17]
+        - columnheader "Date" [ref=e18]
+        - columnheader "Check-in" [ref=e19]
+        - columnheader "Check-out" [ref=e20]
+    - rowgroup [ref=e21]:
+      - row "120 Waliur 02 Mar 2026 08:54 14:18" [ref=e22]:
+        - cell "120" [ref=e23]
+        - cell "Waliur" [ref=e24]
+        - cell "02 Mar 2026" [ref=e25]
+        - cell "08:54" [ref=e26]
+        - cell "14:18" [ref=e27]
+      - row "107 Hana 03 Mar 2026 11:21 12:43" [ref=e28]:
+        - cell "107" [ref=e29]
+        - cell "Hana" [ref=e30]
+        - cell "03 Mar 2026" [ref=e31]
+        - cell "11:21" [ref=e32]
+        - cell "12:43" [ref=e33]
+      - row "119 Mahbour 03 Mar 2026 12:30 16:01" [ref=e34]:
+        - cell "119" [ref=e35]
+        - cell "Mahbour" [ref=e36]
+        - cell "03 Mar 2026" [ref=e37]
+        - cell "12:30" [ref=e38]
+        - cell "16:01" [ref=e39]
+      - row "40 Mdrasil 03 Mar 2026 12:30 16:01" [ref=e40]:
+        - cell "40" [ref=e41]
+        - cell "Mdrasil" [ref=e42]
+        - cell "03 Mar 2026" [ref=e43]
+        - cell "12:30" [ref=e44]
+        - cell "16:01" [ref=e45]
+      - row "120 Waliur 03 Mar 2026 11:05 14:38" [ref=e46]:
+        - cell "120" [ref=e47]
+        - cell "Waliur" [ref=e48]
+        - cell "03 Mar 2026" [ref=e49]
+        - cell "11:05" [ref=e50]
+        - cell "14:38" [ref=e51]
+      - row "102 Farah 04 Mar 2026 08:36 14:08" [ref=e52]:
+        - cell "102" [ref=e53]
+        - cell "Farah" [ref=e54]
+        - cell "04 Mar 2026" [ref=e55]
+        - cell "08:36" [ref=e56]
+        - cell "14:08" [ref=e57]
+      - row "107 Hana 04 Mar 2026 08:42 15:00" [ref=e58]:
+        - cell "107" [ref=e59]
+        - cell "Hana" [ref=e60]
+        - cell "04 Mar 2026" [ref=e61]
+        - cell "08:42" [ref=e62]
+        - cell "15:00" [ref=e63]
+      - row "117 Jaherul 04 Mar 2026 08:45 15:01" [ref=e64]:
+        - cell "117" [ref=e65]
+        - cell "Jaherul" [ref=e66]
+        - cell "04 Mar 2026" [ref=e67]
+        - cell "08:45" [ref=e68]
+        - cell "15:01" [ref=e69]
+      - row "38 Kathlyn 04 Mar 2026 08:51 15:14" [ref=e70]:
+        - cell "38" [ref=e71]
+        - cell "Kathlyn" [ref=e72]
+        - cell "04 Mar 2026" [ref=e73]
+        - cell "08:51" [ref=e74]
+        - cell "15:14" [ref=e75]
+      - row "119 Mahbour 04 Mar 2026 08:34 15:19" [ref=e76]:
+        - cell "119" [ref=e77]
+        - cell "Mahbour" [ref=e78]
+        - cell "04 Mar 2026" [ref=e79]
+        - cell "08:34" [ref=e80]
+        - cell "15:19" [ref=e81]
+      - row "44 Mazen 04 Mar 2026 09:25 15:01" [ref=e82]:
+        - cell "44" [ref=e83]
+        - cell "Mazen" [ref=e84]
+        - cell "04 Mar 2026" [ref=e85]
+        - cell "09:25" [ref=e86]
+        - cell "15:01" [ref=e87]
+      - row "1 Walid 04 Mar 2026 08:59 15:14" [ref=e88]:
+        - cell "1" [ref=e89]
+        - cell "Walid" [ref=e90]
+        - cell "04 Mar 2026" [ref=e91]
+        - cell "08:59" [ref=e92]
+        - cell "15:14" [ref=e93]
+      - row "41 Walidnew 04 Mar 2026 08:58 15:14" [ref=e94]:
+        - cell "41" [ref=e95]
+        - cell "Walidnew" [ref=e96]
+        - cell "04 Mar 2026" [ref=e97]
+        - cell "08:58" [ref=e98]
+        - cell "15:14" [ref=e99]
+      - row "120 Waliur 04 Mar 2026 09:00 16:12" [ref=e100]:
+        - cell "120" [ref=e101]
+        - cell "Waliur" [ref=e102]
+        - cell "04 Mar 2026" [ref=e103]
+        - cell "09:00" [ref=e104]
+        - cell "16:12" [ref=e105]
+      - row "119 Mahbour 07 Mar 2026 15:09 —" [ref=e106]:
+        - cell "119" [ref=e107]
+        - cell "Mahbour" [ref=e108]
+        - cell "07 Mar 2026" [ref=e109]
+        - cell "15:09" [ref=e110]
+        - cell "—" [ref=e111]
+      - row "104 Adel 08 Mar 2026 08:35 09:26" [ref=e112]:
+        - cell "104" [ref=e113]
+        - cell "Adel" [ref=e114]
+        - cell "08 Mar 2026" [ref=e115]
+        - cell "08:35" [ref=e116]
+        - cell "09:26" [ref=e117]
+      - row "28 Charisma 08 Mar 2026 08:14 —" [ref=e118]:
+        - cell "28" [ref=e119]
+        - cell "Charisma" [ref=e120]
+        - cell "08 Mar 2026" [ref=e121]
+        - cell "08:14" [ref=e122]
+        - cell "—" [ref=e123]
+      - row "109 Fathima 08 Mar 2026 08:45 —" [ref=e124]:
+        - cell "109" [ref=e125]
+        - cell "Fathima" [ref=e126]
+        - cell "08 Mar 2026" [ref=e127]
+        - cell "08:45" [ref=e128]
+        - cell "—" [ref=e129]
+      - row "117 Jaherul 08 Mar 2026 08:43 09:09" [ref=e130]:
+        - cell "117" [ref=e131]
+        - cell "Jaherul" [ref=e132]
+        - cell "08 Mar 2026" [ref=e133]
+        - cell "08:43" [ref=e134]
+        - cell "09:09" [ref=e135]
+      - row "2 Jassim 08 Mar 2026 09:13 —" [ref=e136]:
+        - cell "2" [ref=e137]
+        - cell "Jassim" [ref=e138]
+        - cell "08 Mar 2026" [ref=e139]
+        - cell "09:13" [ref=e140]
+        - cell "—" [ref=e141]
+      - row "38 Kathlyn 08 Mar 2026 08:40 08:53" [ref=e142]:
+        - cell "38" [ref=e143]
+        - cell "Kathlyn" [ref=e144]
+        - cell "08 Mar 2026" [ref=e145]
+        - cell "08:40" [ref=e146]
+        - cell "08:53" [ref=e147]
+      - row "119 Mahbour 08 Mar 2026 08:37 —" [ref=e148]:
+        - cell "119" [ref=e149]
+        - cell "Mahbour" [ref=e150]
+        - cell "08 Mar 2026" [ref=e151]
+        - cell "08:37" [ref=e152]
+        - cell "—" [ref=e153]
+      - row "44 Mazen 08 Mar 2026 09:15 —" [ref=e154]:
+        - cell "44" [ref=e155]
+        - cell "Mazen" [ref=e156]
+        - cell "08 Mar 2026" [ref=e157]
+        - cell "09:15" [ref=e158]
+        - cell "—" [ref=e159]
+      - row "40 Mdrasil 08 Mar 2026 08:37 —" [ref=e160]:
+        - cell "40" [ref=e161]
+        - cell "Mdrasil" [ref=e162]
+        - cell "08 Mar 2026" [ref=e163]
+        - cell "08:37" [ref=e164]
+        - cell "—" [ref=e165]
+      - row "108 Najwa 08 Mar 2026 09:01 09:21" [ref=e166]:
+        - cell "108" [ref=e167]
+        - cell "Najwa" [ref=e168]
+        - cell "08 Mar 2026" [ref=e169]
+        - cell "09:01" [ref=e170]
+        - cell "09:21" [ref=e171]
+      - row "3 Sabrine 08 Mar 2026 09:27 —" [ref=e172]:
+        - cell "3" [ref=e173]
+        - cell "Sabrine" [ref=e174]
+        - cell "08 Mar 2026" [ref=e175]
+        - cell "09:27" [ref=e176]
+        - cell "—" [ref=e177]
+      - row "1 Walid 08 Mar 2026 08:53 09:10" [ref=e178]:
+        - cell "1" [ref=e179]
+        - cell "Walid" [ref=e180]
+        - cell "08 Mar 2026" [ref=e181]
+        - cell "08:53" [ref=e182]
+        - cell "09:10" [ref=e183]
+      - row "120 Waliur 08 Mar 2026 08:56 —" [ref=e184]:
+        - cell "120" [ref=e185]
+        - cell "Waliur" [ref=e186]
+        - cell "08 Mar 2026" [ref=e187]
+        - cell "08:56" [ref=e188]
+        - cell "—" [ref=e189]

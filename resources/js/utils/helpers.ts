@@ -103,6 +103,8 @@ declare global {
 const getImagePath = (path: string, pageProps?: any): string => {
   if (!path) return '';
   if (path.startsWith('http')) return path;
+  // Public assets (e.g. /logo.svg) - serve directly
+  if (path.startsWith('/')) return `${window.location.origin}${path}`;
   // If path already contains storage/media, just prepend domain
   if (path.includes('storage/media')) {
     return path.startsWith('/') ? `${window.location.origin}${path}` : `${window.location.origin}/${path}`;

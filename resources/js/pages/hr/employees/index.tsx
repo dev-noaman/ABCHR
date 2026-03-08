@@ -5,7 +5,9 @@ import { usePage, router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Plus, Eye, Edit, Trash2, Lock, Unlock, MoreHorizontal, Key } from 'lucide-react';
+import { Plus, Eye, Edit, Trash2, Lock, Unlock, MoreHorizontal, Key, Upload, Download } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
 import { hasPermission } from '@/utils/authorization';
 import { CrudTable } from '@/components/CrudTable';
 import { CrudDeleteModal } from '@/components/CrudDeleteModal';
@@ -34,6 +36,9 @@ export default function Employees() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<any>(null);
+  const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
+  const [bulkFile, setBulkFile] = useState<File | null>(null);
+  const [isBulkImporting, setIsBulkImporting] = useState(false);
   
   // Check if any filters are active
   const hasActiveFilters = () => {
@@ -195,12 +200,39 @@ export default function Employees() {
     }, { preserveState: true, preserveScroll: true });
   };
 
+  const handleBulkImport = () => {
+    if (!bulkFile) {
+      toast.error(t('Please select a CSV file.'));
+      return;
+    }
+    setIsBulkImporting(true);
+    const formData = new FormData();
+    formData.append('file', bulkFile);
+    router.post(route('hr.employees.bulk-import'), formData, {
+      forceFormData: true,
+      onSuccess: () => {
+        setIsBulkModalOpen(false);
+        setBulkFile(null);
+        setIsBulkImporting(false);
+      },
+      onError: () => {
+        setIsBulkImporting(false);
+      },
+    });
+  };
+
   // Define page actions
   const pageActions = [];
   
   // Add the "Add New Employee" button if user has permission
   if (hasPermission(permissions, 'create-employees')) {
     const canCreate = !planLimits || planLimits.can_create;
+    pageActions.push({
+      label: t('Add Bulk'),
+      icon: <Upload className="h-4 w-4 mr-2" />,
+      variant: 'outline' as const,
+      onClick: () => setIsBulkModalOpen(true),
+    });
     pageActions.push({
       label: planLimits && !canCreate ? t('Employee Create Limit Reached ({{current}}/{{max}})', { current: planLimits.current_users, max: planLimits.max_users }) : t('Add Employee'),
       icon: <Plus className="h-4 w-4 mr-2" />,
@@ -670,6 +702,57 @@ export default function Employees() {
         title={t('Change Employee Password')}
         mode='edit'
       />
+
+      {/* Bulk Import Modal */}
+      <Dialog open={isBulkModalOpen} onOpenChange={setIsBulkModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{t('Bulk Import Employees')}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div className="flex items-center gap-3">
+              <Download className="h-5 w-5 text-muted-foreground" />
+              <div>
+                <p className="text-sm font-medium">{t('Step 1: Download Template')}</p>
+                <p className="text-xs text-muted-foreground">{t('Download the CSV template and fill in employee data.')}</p>
+              </div>
+              <a
+                href={route('hr.employees.template')}
+                target="_blank"
+                className="ml-auto"
+              >
+                <Button type="button" variant="outline" size="sm">
+                  {t('Download')}
+                </Button>
+              </a>
+            </div>
+            <div className="border-t pt-4">
+              <div className="flex items-center gap-3 mb-3">
+                <Upload className="h-5 w-5 text-muted-foreground" />
+                <p className="text-sm font-medium">{t('Step 2: Upload Filled CSV')}</p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="bulk-csv-file">{t('CSV File')}</Label>
+                <input
+                  id="bulk-csv-file"
+                  type="file"
+                  accept=".csv,text/csv"
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 cursor-pointer"
+                  onChange={(e) => setBulkFile(e.target.files?.[0] || null)}
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => { setIsBulkModalOpen(false); setBulkFile(null); }}>
+              {t('Cancel')}
+            </Button>
+            <Button onClick={handleBulkImport} disabled={!bulkFile || isBulkImporting}>
+              {isBulkImporting ? t('Importing...') : t('Import')}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </PageTemplate>
   );
 }

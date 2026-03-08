@@ -1,0 +1,9 @@
+{"sessionId":"b2a26f","location":"leave-applications:375","message":"eligibleLeaveTypes in form modal","data":{"count":6,"employeeId":"","firstNames":["Annual Leave","Casual Leave","Sick Leave"]},"hypothesisId":"A","timestamp":1772634577131}
+{"sessionId":"b2a26f","location":"leave-applications:Select","message":"leave type Select openChange","data":{"open":true,"index":0},"hypothesisId":"B","timestamp":1772634585032}
+{"sessionId":"b2a26f","location":"leave-applications:Select","message":"leave type Select openChange","data":{"open":false,"index":0},"hypothesisId":"B","timestamp":1772634588088}
+{"sessionId":"b2a26f","location":"leave-applications:Select","message":"leave type Select openChange","data":{"open":true,"index":0},"hypothesisId":"B","timestamp":1772634588892}
+{"sessionId":"b2a26f","location":"leave-applications:Select","message":"leave type Select openChange","data":{"open":false,"index":0},"hypothesisId":"B","timestamp":1772634589048}
+{"sessionId":"b2a26f","location":"leave-applications:Select","message":"leave type Select openChange","data":{"open":true,"index":0},"hypothesisId":"B","timestamp":1772634589490}
+{"sessionId":"b2a26f","location":"leave-applications:Select","message":"leave type Select openChange","data":{"open":false,"index":0},"hypothesisId":"B","timestamp":1772634589864}
+{"sessionId":"b2a26f","location":"leave-applications:Select","message":"leave type Select openChange","data":{"open":true,"index":0},"hypothesisId":"B","timestamp":1772634589879}
+{"sessionId":"b2a26f","location":"leave-applications:Select","message":"leave type Select openChange","data":{"open":false,"index":0},"hypothesisId":"B","timestamp":1772634590403}

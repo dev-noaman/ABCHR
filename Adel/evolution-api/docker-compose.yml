@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: evolution-nginx
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api
+    networks:
+      - evolution-net
+
+  api:
+    image: evoapicloud/evolution-api:latest
+    container_name: evolution-api
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - postgres
+    volumes:
+      - evolution_instances:/evolution/instances
+    env_file:
+      - .env
+    networks:
+      - evolution-net
+
+  frontend:
+    image: evoapicloud/evolution-manager:latest
+    container_name: evolution-frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:80"
+    networks:
+      - evolution-net
+
+  redis:
+    image: redis:alpine
+    container_name: evolution-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - evolution_redis:/data
+    networks:
+      evolution-net:
+        aliases:
+          - evolution-redis
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: evolution-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DATABASE:-evolution_db}
+      POSTGRES_USER: ${POSTGRES_USERNAME:-evolution}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-evolution_secret}
+    volumes:
+      - evolution_postgres:/var/lib/postgresql/data
+    networks:
+      - evolution-net
+
+volumes:
+  evolution_instances:
+  evolution_redis:
+  evolution_postgres:
+
+networks:
+  evolution-net:
+    driver: bridge

@@ -1,0 +1,6 @@
+Found the root cause! Vite is detecting changes to .playwright-mcp/console-*.log files (written during Playwright's debugging) and constantly reloading the page — creating an infinite reload loop! That's why the app is stuck at "Loading..."
+The fix: add .playwright-mcp/** to watch.ignored in vite.config.ts. Also adding @vitejs/plugin-react to fix the @react-refresh preamble.
+
+I see the issue! The vite.config.ts doesn't include @vitejs/plugin-react as a plugin, yet the blade template uses @viteReactRefresh which injects a @react-refresh preamble script that doesn't exist. Let me check the blade template:
+
+Found a critical detail: @viteReactRefresh is only injected in local environment (line 41-43). I switched to production but the hot file keeps dev server alive. Let me check app.tsx to understand the "Loading..." state:

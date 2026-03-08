@@ -677,6 +677,12 @@ class RoleSeeder extends Seeder
             'edit-ip-restriction',
             'delete-ip-restriction',
 
+            // Location Binding
+            'manage-location-binding-settings',
+            'create-location-bind',
+            'edit-location-bind',
+            'delete-location-bind',
+
             // career page
             'manage-career-page',
         ];

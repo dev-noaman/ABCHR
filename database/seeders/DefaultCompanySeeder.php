@@ -69,7 +69,7 @@ class DefaultCompanySeeder extends Seeder
             ],
             [
                 'name' => 'Company',
-                'email' => 'company@example.com',
+                'email' => 'company@abchr.com',
                 'lang' => 'en',
             ]
         ];
@@ -84,14 +84,14 @@ class DefaultCompanySeeder extends Seeder
                 $companiesToCreate = $defaultCompanies;
             } else {
                 $companiesToCreate = array_filter($defaultCompanies, function ($company) {
-                    return $company['email'] === 'company@example.com';
+                    return $company['email'] === 'company@abchr.com';
                 });
             }
         } else {
             // Non-SaaS: Only one company
             $companiesToCreate = [[
                 'name' => 'Company',
-                'email' => 'company@example.com',
+                'email' => 'company@abchr.com',
                 'lang' => 'en',
             ]];
         }
@@ -110,7 +110,7 @@ class DefaultCompanySeeder extends Seeder
                     'name' => $companyData['name'],
                     'email' => $companyData['email'],
                     'email_verified_at' => now(),
-                    'password' => Hash::make('password'),
+                    'password' => Hash::make('123456'),
                     'type' => 'company',
                     'lang' => $companyData['lang'],
                     'plan_id' => config('app.is_demo') ? $plans->random()->id : $plans->first()->id,
@@ -139,7 +139,7 @@ class DefaultCompanySeeder extends Seeder
                     'name' => $companyData['name'],
                     'email' => $companyData['email'],
                     'email_verified_at' => now(),
-                    'password' => Hash::make('password'),
+                    'password' => Hash::make('123456'),
                     'type' => 'company',
                     'lang' => $companyData['lang'],                    
                     'created_at' => now(),

@@ -54,8 +54,8 @@ export default function Login({ status, canResetPassword, demoBusinesses = [] }:
         // Set default credentials if in demo mode
         if (isDemo) {
             setData({
-                email: isSaas ? 'company@example.com' : 'company@example.com',
-                password: 'password',
+                email: isSaas ? 'company@abchr.com' : 'company@abchr.com',
+                password: '123456',
                 remember: false
             });
         }
@@ -202,7 +202,7 @@ export default function Login({ status, canResetPassword, demoBusinesses = [] }:
                                             onClick={() => {
                                                 router.post(route('login'), {
                                                     email: 'superadmin@example.com',
-                                                    password: 'password',
+                                                    password: '123456',
                                                     remember: false,
                                                     recaptcha_token: recaptchaToken
                                                 });
@@ -216,8 +216,8 @@ export default function Login({ status, canResetPassword, demoBusinesses = [] }:
                                             type="button"
                                             onClick={() => {
                                                 router.post(route('login'), {
-                                                    email: 'company@example.com',
-                                                    password: 'password',
+                                                    email: 'company@abchr.com',
+                                                    password: '123456',
                                                     remember: false,
                                                     recaptcha_token: recaptchaToken
                                                 });
@@ -231,8 +231,8 @@ export default function Login({ status, canResetPassword, demoBusinesses = [] }:
                                             type="button"
                                             onClick={() => {
                                                 router.post(route('login'), {
-                                                    email: 'maggie93@example.com',
-                                                    password: 'password',
+                                                    email: 'hr@abchr.com',
+                                                    password: '123456',
                                                     remember: false,
                                                     recaptcha_token: recaptchaToken
                                                 });
@@ -246,8 +246,8 @@ export default function Login({ status, canResetPassword, demoBusinesses = [] }:
                                             type="button"
                                             onClick={() => {
                                                 router.post(route('login'), {
-                                                    email: 'qwaters@example.com',
-                                                    password: 'password',
+                                                    email: 'employee@abchr.com',
+                                                    password: '123456',
                                                     remember: false,
                                                     recaptcha_token: recaptchaToken
                                                 });
@@ -264,8 +264,8 @@ export default function Login({ status, canResetPassword, demoBusinesses = [] }:
                                             type="button"
                                             onClick={() => {
                                                 router.post(route('login'), {
-                                                    email: 'company@example.com',
-                                                    password: 'password',
+                                                    email: 'company@abchr.com',
+                                                    password: '123456',
                                                     remember: false,
                                                     recaptcha_token: recaptchaToken
                                                 });
@@ -279,8 +279,8 @@ export default function Login({ status, canResetPassword, demoBusinesses = [] }:
                                             type="button"
                                             onClick={() => {
                                                 router.post(route('login'), {
-                                                    email: 'hr@example.com',
-                                                    password: 'password',
+                                                    email: 'hr@abchr.com',
+                                                    password: '123456',
                                                     remember: false,
                                                     recaptcha_token: recaptchaToken
                                                 });
@@ -294,8 +294,8 @@ export default function Login({ status, canResetPassword, demoBusinesses = [] }:
                                             type="button"
                                             onClick={() => {
                                                 router.post(route('login'), {
-                                                    email: 'employee@example.com',
-                                                    password: 'password',
+                                                    email: 'employee@abchr.com',
+                                                    password: '123456',
                                                     remember: false,
                                                     recaptcha_token: recaptchaToken
                                                 });

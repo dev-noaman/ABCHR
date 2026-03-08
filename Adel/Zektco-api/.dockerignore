@@ -1,0 +1,10 @@
+.git
+*.log
+*.png
+__pycache__
+.env
+.venv
+venv
+*.pyc
+.env.example
+analyze.md

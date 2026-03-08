@@ -1,3 +1,4 @@
+import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import laravel from 'laravel-vite-plugin';
 import { resolve } from 'node:path';
@@ -30,6 +31,7 @@ export default defineConfig({
             ssr: 'resources/js/ssr.tsx',
             refresh: true,
         }),
+        react(),
         stripUseClientDirective(),
         tailwindcss(),
     ],
@@ -41,7 +43,7 @@ export default defineConfig({
             'Access-Control-Allow-Headers': '*',
         },
         watch: {
-            ignored: ['**/vendor/**', '**/node_modules/**']
+            ignored: ['**/vendor/**', '**/node_modules/**', '**/.playwright-mcp/**', '**/debug-*.log']
         }
     },
 

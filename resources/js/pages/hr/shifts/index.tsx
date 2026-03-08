@@ -456,7 +456,7 @@ export default function Shifts() {
             { name: 'description', label: t('Description'), type: 'textarea' },
             { name: 'start_time', label: t('Start Time'), type: 'time', required: true },
             { name: 'end_time', label: t('End Time'), type: 'time', required: true },
-            { name: 'break_duration', label: t('Break Duration (minutes)'), type: 'number', required: true, min: 0, defaultValue: 60 },
+            { name: 'break_duration', label: t('Break Duration (minutes)'), type: 'number', required: false, min: 0, defaultValue: 0, helpText: t('Use 0 for Ramadan or no-break shifts') },
             { name: 'break_start_time', label: t('Break Start Time'), type: 'time' },
             { name: 'break_end_time', label: t('Break End Time'), type: 'time' },
             { name: 'grace_period', label: t('Grace Period (minutes)'), type: 'number', required: true, min: 0, defaultValue: 15 },

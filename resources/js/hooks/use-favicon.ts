@@ -12,6 +12,9 @@ export function useFavicon() {
     let faviconUrl;
     if (favicon.startsWith('http')) {
       faviconUrl = favicon;
+    } else if (favicon.startsWith('/')) {
+      // Public asset (e.g. /logo.svg)
+      faviconUrl = `${window.location.origin}${favicon}`;
     } else if (favicon.includes('Product/hrmgo-saas-react/storage/media/')) {
       // Path already contains full project path, just prepend origin
       faviconUrl = `${window.location.origin}/${favicon}`;

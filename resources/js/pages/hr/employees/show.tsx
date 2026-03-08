@@ -189,6 +189,12 @@ export default function EmployeeShow() {
                     <span className="text-sm">{employee.employee.phone}</span>
                   </div>
                 )}
+                {employee.employee?.personal_number && (
+                  <div className="flex items-center">
+                    <Phone className="h-4 w-4 mr-2 text-muted-foreground" />
+                    <span className="text-sm">{employee.employee.personal_number}</span>
+                  </div>
+                )}
                 {employee.employee?.date_of_birth && (
                   <div className="flex items-center">
                     <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
@@ -258,6 +264,10 @@ export default function EmployeeShow() {
                     <div>
                       <h4 className="text-sm font-medium text-muted-foreground">{t('Phone Number')}</h4>
                       <p>{employee.employee?.phone || '-'}</p>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-medium text-muted-foreground">{t('Personal Number')}</h4>
+                      <p>{employee.employee?.personal_number || '-'}</p>
                     </div>
                      <div>
                       <h4 className="text-sm font-medium text-muted-foreground">{t('Employee Code')}</h4>

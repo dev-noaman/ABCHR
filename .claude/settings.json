@@ -1,15 +1,26 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash",
-      "Read",
-      "Edit",
-      "Write",
-      "web_search",
-      "fetch",
-      "mcp__context7__*",
-      "mcp__playwright__*",
-      "mcp__stitch__*"
-    ]
-  }
+﻿{
+    "permissions":  {
+                        "allow":  [
+                                      "Bash",
+                                      "Read",
+                                      "Edit",
+                                      "Write",
+                                      "web_search",
+                                      "fetch",
+                                      "mcp__context7__*",
+                                      "mcp__playwright__*",
+                                      "mcp__stitch__*",
+                                      "WebFetch",
+                                      "mcp__plugin_playwright_playwright__browser_navigate",
+                                      "mcp__plugin_playwright_playwright__browser_click",
+                                      "mcp__plugin_context7_context7__resolve-library-id",
+                                      "mcp__plugin_context7_context7__query-docs",
+                                      "mcp__plugin_playwright_playwright__browser_console_messages",
+                                      "mcp__plugin_playwright_playwright__browser_network_requests",
+                                      "mcp__plugin_playwright_playwright__browser_wait_for",
+                                      "mcp__plugin_playwright_playwright__browser_fill_form",
+                                      "mcp__plugin_playwright_playwright__browser_snapshot",
+                                      "mcp__plugin_playwright_playwright__browser_close"
+                                  ]
+                    }
 }

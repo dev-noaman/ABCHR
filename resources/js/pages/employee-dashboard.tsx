@@ -70,18 +70,43 @@ export default function EmployeeDashboard({ dashboardData }: { dashboardData: Em
     return () => clearInterval(interval);
   }, [dashboardData, isClockedIn]);
 
-  const handleClockIn = () => {
+  const locationRestrictionEnabled = dashboardData?.locationRestrictionEnabled ?? false;
+
+  const getGeolocation = (): Promise<{ latitude: number; longitude: number } | null> => {
+    if (!locationRestrictionEnabled) return Promise.resolve(null);
+    if (!navigator.geolocation) {
+      toast.error(t('Geolocation is not supported by your browser.'));
+      return Promise.resolve(null);
+    }
+    return new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude }),
+        () => {
+          toast.error(t('Location is required to clock in. Please enable location access.'));
+          resolve(null);
+        },
+        { timeout: 10000, maximumAge: 0, enableHighAccuracy: true }
+      );
+    });
+  };
+
+  const doClockIn = (coords: { latitude: number; longitude: number } | null) => {
     toast.loading(t('Clocking in...'));
 
     router.post(route('hr.attendance.clock-in'), {
-      employee_id: auth.user.id
+      employee_id: auth.user.id,
+      ...(coords ? { latitude: coords.latitude, longitude: coords.longitude } : {})
     }, {
       onSuccess: (page) => {
         toast.dismiss();
         if (page.props.flash?.success) {
           setIsClockedIn(true);
           setClockInTime(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }));
-          toast.success(t(page.props.flash.success));
+          if ((page.props.flash as any)?.clockedOutsideLocation) {
+            toast.warning(t('You are clocked in from outside an allowed location. I will inform GM.'), { duration: 8000 });
+          } else {
+            toast.success(t(page.props.flash.success));
+          }
         } else {
           toast.error(t(page.props.flash.error || 'Failed to clock in'));
         }
@@ -102,18 +127,29 @@ export default function EmployeeDashboard({ dashboardData }: { dashboardData: Em
     });
   };
 
-  const handleClockOut = () => {
+  const handleClockIn = async () => {
+    const coords = await getGeolocation();
+    if (locationRestrictionEnabled && coords === null) return;
+    doClockIn(coords);
+  };
+
+  const doClockOut = (coords: { latitude: number; longitude: number } | null) => {
     toast.loading(t('Clocking out...'));
 
     router.post(route('hr.attendance.clock-out'), {
-      employee_id: auth.user.id
+      employee_id: auth.user.id,
+      ...(coords ? { latitude: coords.latitude, longitude: coords.longitude } : {})
     }, {
       onSuccess: (page) => {
         toast.dismiss();
         if (page.props.flash?.success) {
           setIsClockedIn(false);
           setClockOutTime(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }));
-          toast.success(t(page.props.flash.success));
+          if ((page.props.flash as any)?.clockedOutsideLocation) {
+            toast.warning(t('You are clocked out from outside an allowed location. I will inform GM.'), { duration: 8000 });
+          } else {
+            toast.success(t(page.props.flash.success));
+          }
         } else {
           toast.error(t(page.props.flash.error || 'Failed to clock out'));
         }
@@ -132,6 +168,12 @@ export default function EmployeeDashboard({ dashboardData }: { dashboardData: Em
         }
       }
     });
+  };
+
+  const handleClockOut = async () => {
+    const coords = await getGeolocation();
+    if (locationRestrictionEnabled && coords === null) return;
+    doClockOut(coords);
   };
 
   const pageActions: PageAction[] = [

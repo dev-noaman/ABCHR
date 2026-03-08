@@ -1,5 +1,6 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { CreditCard, Users, Smartphone, QrCode } from 'lucide-react';
+import AppLogoIcon from '@/components/app-logo-icon';
 import { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LanguageSwitcher } from '@/components/language-switcher';
@@ -8,7 +9,6 @@ import { useAppearance, THEME_COLORS } from '@/hooks/use-appearance';
 import { useFavicon } from '@/hooks/use-favicon';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
 import { getImagePath } from '@/utils/helpers';
-import { Head, usePage } from '@inertiajs/react';
 import React from 'react';
 
 interface AuthLayoutProps {
@@ -50,14 +50,15 @@ export default function AuthLayout({
     useFavicon();
     const { t, i18n } = useTranslation();
     const [mounted, setMounted] = useState(false);
+    const [logoError, setLogoError] = useState(false);
     const { logoLight, logoDark, themeColor, customColor } = useBrand();
     const { appearance } = useAppearance();
 
     const currentLogo = appearance === 'dark' ? logoLight : logoDark;
     const primaryColor = themeColor === 'custom' ? customColor : THEME_COLORS[themeColor as keyof typeof THEME_COLORS];
+
+    useEffect(() => setLogoError(false), [currentLogo]);
     const globalSettings = (window as any).page?.props?.globalSettings;
-    console.log('globalSettings',globalSettings);
-    
     const isDemo = globalSettings?.is_demo || false;
     // const userLanguage = globalSettings?.defaultLanguage || 'en';
     const userLanguage = (usePage().props as any).userLanguage;
@@ -204,10 +205,15 @@ export default function AuthLayout({
                     {/* Logo */}
                     <div className="text-center mb-8">
                         <div className="relative lg:inline-block pb-2 lg:px-6">
-                            {currentLogo ? (
-                                <img src={getImagePath(currentLogo)} alt="Logo" className="w-auto mx-auto" />
+                            {currentLogo && !logoError ? (
+                                <img
+                                    src={getImagePath(currentLogo)}
+                                    alt="Logo"
+                                    className="w-auto h-14 mx-auto object-contain"
+                                    onError={() => setLogoError(true)}
+                                />
                             ) : (
-                                <CreditCard className="h-8 w-8 mx-auto" style={{ color: primaryColor }} />
+                                <AppLogoIcon className="h-14 w-auto mx-auto" style={{ fill: primaryColor }} />
                             )}
                         </div>
                     </div>

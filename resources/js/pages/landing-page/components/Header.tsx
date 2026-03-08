@@ -67,7 +67,7 @@ export default function Header({ settings, sectionData, customPages = [], brandC
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link 
-              href={route("home")} 
+              href={route("landing")} 
               className="text-2xl font-bold text-gray-900 transition-colors"
               onMouseEnter={(e) => e.currentTarget.style.color = brandColor}
               onMouseLeave={(e) => e.currentTarget.style.color = ''}
@@ -79,7 +79,7 @@ export default function Header({ settings, sectionData, customPages = [], brandC
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
             <Link
-              href={route('home')}
+              href={route('landing')}
               className="text-gray-600 text-sm font-medium transition-colors relative group"
               style={{ '--hover-color': brandColor } as React.CSSProperties}
               onMouseEnter={(e) => e.currentTarget.style.color = brandColor}
@@ -166,7 +166,7 @@ export default function Header({ settings, sectionData, customPages = [], brandC
               style={isTransparent ? { backgroundColor: 'white' } : { backgroundColor }}
             >
               <Link
-                href={route('home')}
+                href={route('landing')}
                 className="block text-gray-600 hover:text-gray-900 text-base font-medium transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >

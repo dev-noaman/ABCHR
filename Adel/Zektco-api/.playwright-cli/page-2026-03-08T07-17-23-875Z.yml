@@ -1,0 +1,40 @@
+- generic [active] [ref=e1]:
+  - heading "Attendance Logs" [level=1] [ref=e2]
+  - generic [ref=e3]: Auto-refreshing every 5 seconds.
+  - generic [ref=e4]:
+    - generic [ref=e5]: "From:"
+    - textbox "From:" [ref=e6]: 2026-03-01
+    - generic [ref=e7]: "To:"
+    - textbox "To:" [ref=e8]: 2026-03-08
+    - generic [ref=e9]: "Staff:"
+    - combobox "Staff:" [ref=e10]:
+      - option "All staff" [selected]
+      - option "Adel (104)"
+      - option "Andrea (110)"
+      - option "Charisma (106)"
+      - option "Farah (102)"
+      - option "Fathima (109)"
+      - option "Hana (107)"
+      - option "Jaherul (117)"
+      - option "Jassim (2)"
+      - option "Kathlyn (114)"
+      - option "Mahbour (119)"
+      - option "Mahfuz (122)"
+      - option "Mazen (105)"
+      - option "Najwa (108)"
+      - option "Sabrine (3)"
+      - option "Walid (1)"
+      - option "Waliur (120)"
+      - option "— (133)"
+    - generic [ref=e11] [cursor=pointer]:
+      - checkbox "Only days with punches" [checked] [ref=e12]
+      - text: Only days with punches
+  - table [ref=e13]:
+    - rowgroup [ref=e14]:
+      - row "Staff ID Staff Name Date Check-in Check-out" [ref=e15]:
+        - columnheader "Staff ID" [ref=e16]
+        - columnheader "Staff Name" [ref=e17]
+        - columnheader "Date" [ref=e18]
+        - columnheader "Check-in" [ref=e19]
+        - columnheader "Check-out" [ref=e20]
+    - rowgroup

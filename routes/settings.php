@@ -94,6 +94,13 @@ Route::middleware(['auth', 'verified', 'plan.access'])->group(function () {
         Route::delete('ip-restrictions/{ipRestriction}', [\App\Http\Controllers\IpRestrictionController::class, 'destroy'])->name('ip-restrictions.destroy');
     });
 
+    // Location Binding Settings routes
+    Route::middleware('permission:manage-location-binding-settings')->group(function () {
+        Route::post('location-binds', [\App\Http\Controllers\LocationBindController::class, 'store'])->name('location-binds.store');
+        Route::put('location-binds/{locationBind}', [\App\Http\Controllers\LocationBindController::class, 'update'])->name('location-binds.update');
+        Route::delete('location-binds/{locationBind}', [\App\Http\Controllers\LocationBindController::class, 'destroy'])->name('location-binds.destroy');
+    });
+
     // Zekto Settings routes
     Route::middleware('permission:manage-biomatric-attedance-settings')->group(function () {
         Route::post('settings/zekto/update', [\App\Http\Controllers\ZektoSettingsController::class, 'update'])->name('settings.zekto.update');

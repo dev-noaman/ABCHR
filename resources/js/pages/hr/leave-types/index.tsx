@@ -224,27 +224,25 @@ export default function LeaveTypes() {
       sortable: true,
       render: (value: string, row: any) => (
         <div className="flex items-center gap-2">
-          <div 
+          <div
             className="w-4 h-4 rounded-full border"
             style={{ backgroundColor: row.color }}
           />
-          <span className="font-medium">{value}</span>
+          <div>
+            <span className="font-medium">{value}</span>
+            {row.slug && <span className="ml-1 text-xs text-gray-400">({row.slug})</span>}
+          </div>
         </div>
       )
     },
     {
-      key: 'description',
-      label: t('Description'),
-      render: (value: string) => {
-        return value || '-';
+      key: 'allowance',
+      label: t('Allowance'),
+      render: (value: string, row: any) => {
+        // Show allowance only — it already includes period (e.g. "3/month", "21/30 days*")
+        const display = value || '-';
+        return <span className="font-medium">{display}</span>;
       }
-    },
-    {
-      key: 'max_days_per_year',
-      label: t('Max Days/Year'),
-      render: (value: number) => (
-        <span className="font-mono">{value}</span>
-      )
     },
     {
       key: 'is_paid',
@@ -260,24 +258,49 @@ export default function LeaveTypes() {
       )
     },
     {
-      key: 'status',
-      label: t('Status'),
-      render: (value: string) => {
-        return (
-          <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${value === 'active'
-            ? 'bg-green-50 text-green-700 ring-1 ring-inset ring-green-600/20'
-            : 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20'
-            }`}>
-            {value === 'active' ? t('Active') : t('Inactive')}
-          </span>
-        );
-      }
+      key: 'gender_restriction',
+      label: t('Gender'),
+      render: (value: string) => (
+        <span className="capitalize text-sm">{value || 'all'}</span>
+      )
     },
     {
-      key: 'created_at',
-      label: t('Created At'),
-      sortable: true,
-      render: (value: string) => window.appSettings?.formatDateTimeSimple(value, false) || new Date(value).toLocaleDateString()
+      key: 'single_day_only',
+      label: t('Single Day'),
+      render: (value: boolean) => (
+        <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${
+          value
+            ? 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20'
+            : 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/20'
+        }`}>
+          {value ? t('Yes') : t('No')}
+        </span>
+      )
+    },
+    {
+      key: 'requires_attachment',
+      label: t('Requires Doc'),
+      render: (value: boolean) => (
+        <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${
+          value
+            ? 'bg-orange-50 text-orange-700 ring-1 ring-inset ring-orange-600/20'
+            : 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-500/20'
+        }`}>
+          {value ? t('Yes') : t('No')}
+        </span>
+      )
+    },
+    {
+      key: 'status',
+      label: t('Status'),
+      render: (value: string) => (
+        <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${value === 'active'
+          ? 'bg-green-50 text-green-700 ring-1 ring-inset ring-green-600/20'
+          : 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20'
+        }`}>
+          {value === 'active' ? t('Active') : t('Inactive')}
+        </span>
+      )
     }
   ];
 
@@ -401,17 +424,44 @@ export default function LeaveTypes() {
         formConfig={{
           fields: [
             { name: 'name', label: t('Leave Type Name'), type: 'text', required: true },
+            { name: 'slug', label: t('Slug (e.g. annual, sick, tardy)'), type: 'text', helpText: t('Lowercase letters, numbers and underscores only') },
             { name: 'description', label: t('Description'), type: 'textarea' },
-            { name: 'max_days_per_year', label: t('Maximum Days Per Year'), type: 'number', required: true, min: 0 },
+            { name: 'allowance', label: t('Allowance (display, e.g. "21/30 days*")'), type: 'text' },
+            {
+              name: 'allowance_period',
+              label: t('Allowance Period'),
+              type: 'select',
+              options: [
+                { value: '', label: t('None (unlimited)') },
+                { value: 'year', label: t('Per Year') },
+                { value: 'month', label: t('Per Month') }
+              ],
+              defaultValue: 'year'
+            },
+            { name: 'allowance_value', label: t('Allowance Value (numeric cap, blank = unlimited)'), type: 'number', min: 0 },
+            { name: 'max_days_per_year', label: t('Max Days Per Year (legacy)'), type: 'number', required: true, min: 0 },
             { name: 'is_paid', label: t('Is Paid'), type: 'checkbox', defaultValue: true },
+            { name: 'single_day_only', label: t('Single Day Only'), type: 'checkbox', defaultValue: false },
+            { name: 'requires_attachment', label: t('Requires Attachment (e.g. Sick Certificate)'), type: 'checkbox', defaultValue: false },
+            {
+              name: 'gender_restriction',
+              label: t('Gender Restriction'),
+              type: 'select',
+              options: [
+                { value: 'all', label: t('All') },
+                { value: 'male', label: t('Male Only') },
+                { value: 'female', label: t('Female Only') }
+              ],
+              defaultValue: 'all'
+            },
             { name: 'color', label: t('Color'), type: 'color', required: true, defaultValue: '#3B82F6' },
             {
               name: 'status',
               label: t('Status'),
               type: 'select',
               options: [
-                { value: 'active', label: 'Active' },
-                { value: 'inactive', label: 'Inactive' }
+                { value: 'active', label: t('Active') },
+                { value: 'inactive', label: t('Inactive') }
               ],
               defaultValue: 'active'
             }

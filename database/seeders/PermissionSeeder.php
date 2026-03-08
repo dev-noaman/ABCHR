@@ -902,6 +902,12 @@ class PermissionSeeder extends Seeder
             ['name' => 'edit-ip-restriction', 'module' => 'ip_restriction', 'label' => 'Edit Ip Restriction', 'description' => 'Edit Ip Restriction'],
             ['name' => 'delete-ip-restriction', 'module' => 'ip_restriction', 'label' => 'Delete Ip Restriction', 'description' => 'Delete Ip Restriction'],
 
+            // Location Binding Settings
+            ['name' => 'manage-location-binding-settings', 'module' => 'location_binding', 'label' => 'Manage Location Binding Settings', 'description' => 'Manage Location Binding Settings'],
+            ['name' => 'create-location-bind', 'module' => 'location_binding', 'label' => 'Create Location Bind', 'description' => 'Create Location Bind'],
+            ['name' => 'edit-location-bind', 'module' => 'location_binding', 'label' => 'Edit Location Bind', 'description' => 'Edit Location Bind'],
+            ['name' => 'delete-location-bind', 'module' => 'location_binding', 'label' => 'Delete Location Bind', 'description' => 'Delete Location Bind'],
+
             // Manage Career Page
             ['name' => 'manage-career-page', 'module' => 'career', 'label' => 'Manage Career Page', 'description' => 'Manage Career Page'],
 

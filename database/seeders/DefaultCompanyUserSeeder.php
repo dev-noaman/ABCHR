@@ -58,11 +58,11 @@ class DefaultCompanyUserSeeder extends Seeder
         $isSaas = isSaas();
 
         if ($isSaas && $isDemo) {
-            // SaaS + Demo: 2 managers, 2 HR, 10 employees
+            // SaaS + Demo: 2 managers, 2 HR, 1 employee (employee@abchr.com only)
             $roles = [
                 ['role' => 'manager', 'count' => 2],
                 ['role' => 'hr', 'count' => 2],
-                ['role' => 'employee', 'count' => 10],
+                ['role' => 'employee', 'count' => 1],
             ];
         } elseif ($isSaas && ! $isDemo) {
             // SaaS + Non-Demo: 1 manager, 1 HR, 0 employees
@@ -72,11 +72,11 @@ class DefaultCompanyUserSeeder extends Seeder
                 ['role' => 'employee', 'count' => 0],
             ];
         } elseif (! $isSaas && $isDemo) {
-            // Non-SaaS + Demo: 2 managers, 2 HR, 10 employees
+            // Non-SaaS + Demo: 2 managers, 2 HR, 1 employee (employee@abchr.com only)
             $roles = [
                 ['role' => 'manager', 'count' => 2],
                 ['role' => 'hr', 'count' => 2],
-                ['role' => 'employee', 'count' => 10],
+                ['role' => 'employee', 'count' => 1],
             ];
         } else {
             // Non-SaaS + Non-Demo: 1 manager, 1 HR, 0 employees
@@ -96,7 +96,7 @@ class DefaultCompanyUserSeeder extends Seeder
                     [
                         'name' => $userData['name'],
                         'type' => $roleData['role'],
-                        'password' => Hash::make('password'),
+                        'password' => Hash::make('123456'),
                         'status' => 'active',
                         'created_by' => $company->id,
                     ]
@@ -116,11 +116,11 @@ class DefaultCompanyUserSeeder extends Seeder
 
         switch ($roleType) {
             case 'manager':
-                return ['name' => 'Manager', 'email' => 'manager@example.com'];
+                return ['name' => 'Manager', 'email' => 'manager@abchr.com'];
             case 'hr':
-                return ['name' => 'HR', 'email' => 'hr@example.com'];
+                return ['name' => 'HR', 'email' => 'hr@abchr.com'];
             case 'employee':
-                return ['name' => 'Employee', 'email' => 'employee@example.com'];
+                return ['name' => 'Employee', 'email' => 'employee@abchr.com'];
             default:
                 return ['name' => $faker->name, 'email' => $faker->unique()->safeEmail];
         }

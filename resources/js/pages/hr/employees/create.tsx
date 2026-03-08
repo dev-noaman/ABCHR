@@ -26,7 +26,8 @@ export default function EmployeeCreate() {
     biometric_emp_id: '',
     email: '',
     password: '',
-    phone: '',
+    phone: '974',
+    personal_number: '974',
     date_of_birth: '',
     gender: '',
     branch_id: '',
@@ -283,10 +284,9 @@ export default function EmployeeCreate() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="biometric_emp_id" required>{t('Employee Code')}</Label>
+                <Label htmlFor="biometric_emp_id">{t('Employee Code')}</Label>
                 <Input
                   id="biometric_emp_id"
-                  required
                   value={formData.biometric_emp_id || ''}
                   onChange={(e) => handleChange('biometric_emp_id', e.target.value)}
                   placeholder=""
@@ -329,9 +329,23 @@ export default function EmployeeCreate() {
                   required
                   value={formData.phone}
                   onChange={(e) => handleChange('phone', e.target.value)}
+                  placeholder="974"
                   className={errors.phone ? 'border-red-500' : ''}
                 />
                 {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="personal_number" required>{t('Personal Number')}</Label>
+                <Input
+                  id="personal_number"
+                  required
+                  value={formData.personal_number}
+                  onChange={(e) => handleChange('personal_number', e.target.value)}
+                  placeholder="974"
+                  className={errors.personal_number ? 'border-red-500' : ''}
+                />
+                {errors.personal_number && <p className="text-red-500 text-xs">{errors.personal_number}</p>}
               </div>
 
               <div className="space-y-2">
@@ -580,10 +594,9 @@ export default function EmployeeCreate() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="address_line_1" required>{t('Address Line 1')}</Label>
+                <Label htmlFor="address_line_1">{t('Address Line 1')}</Label>
                 <Input
                   id="address_line_1"
-                  required
                   value={formData.address_line_1}
                   onChange={(e) => handleChange('address_line_1', e.target.value)}
                   className={errors.address_line_1 ? 'border-red-500' : ''}
@@ -592,10 +605,9 @@ export default function EmployeeCreate() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="address_line_2" required>{t('Address Line 2')}</Label>
+                <Label htmlFor="address_line_2">{t('Address Line 2')}</Label>
                 <Input
                   id="address_line_2"
-                  required
                   value={formData.address_line_2}
                   onChange={(e) => handleChange('address_line_2', e.target.value)}
                   className={errors.address_line_2 ? 'border-red-500' : ''}
@@ -604,10 +616,9 @@ export default function EmployeeCreate() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="city" required>{t('City')}</Label>
+                <Label htmlFor="city">{t('City')}</Label>
                 <Input
                   id="city"
-                  required
                   value={formData.city}
                   onChange={(e) => handleChange('city', e.target.value)}
                   className={errors.city ? 'border-red-500' : ''}
@@ -616,10 +627,9 @@ export default function EmployeeCreate() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="state" required>{t('State/Province')}</Label>
+                <Label htmlFor="state">{t('State/Province')}</Label>
                 <Input
                   id="state"
-                  required
                   value={formData.state}
                   onChange={(e) => handleChange('state', e.target.value)}
                   className={errors.state ? 'border-red-500' : ''}
@@ -628,10 +638,9 @@ export default function EmployeeCreate() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="country" required>{t('Country')}</Label>
+                <Label htmlFor="country">{t('Country')}</Label>
                 <Input
                   id="country"
-                  required
                   value={formData.country}
                   onChange={(e) => handleChange('country', e.target.value)}
                   className={errors.country ? 'border-red-500' : ''}
@@ -640,7 +649,7 @@ export default function EmployeeCreate() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="postal_code" required>{t('Postal/Zip Code')}</Label>
+                <Label htmlFor="postal_code">{t('Postal/Zip Code')}</Label>
                 <Input
                   id="postal_code"
                   value={formData.postal_code}
@@ -655,10 +664,9 @@ export default function EmployeeCreate() {
               <h3 className="text-lg font-medium mb-4">{t('Emergency Contact')}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="emergency_contact_name" required>{t('Name')}</Label>
+                  <Label htmlFor="emergency_contact_name">{t('Name')}</Label>
                   <Input
                     id="emergency_contact_name"
-                    required
                     value={formData.emergency_contact_name}
                     onChange={(e) => handleChange('emergency_contact_name', e.target.value)}
                     className={errors.emergency_contact_name ? 'border-red-500' : ''}
@@ -667,10 +675,9 @@ export default function EmployeeCreate() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="emergency_contact_relationship" required>{t('Relationship')}</Label>
+                  <Label htmlFor="emergency_contact_relationship">{t('Relationship')}</Label>
                   <Input
                     id="emergency_contact_relationship"
-                    required
                     value={formData.emergency_contact_relationship}
                     onChange={(e) => handleChange('emergency_contact_relationship', e.target.value)}
                     className={errors.emergency_contact_relationship ? 'border-red-500' : ''}
@@ -679,10 +686,9 @@ export default function EmployeeCreate() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="emergency_contact_number" required>{t('Phone Number')}</Label>
+                  <Label htmlFor="emergency_contact_number">{t('Phone Number')}</Label>
                   <Input
                     id="emergency_contact_number"
-                    required
                     value={formData.emergency_contact_number}
                     onChange={(e) => handleChange('emergency_contact_number', e.target.value)}
                     className={errors.emergency_contact_number ? 'border-red-500' : ''}
@@ -702,11 +708,10 @@ export default function EmployeeCreate() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="bank_name" required>{t('Bank Name')}</Label>
+                <Label htmlFor="bank_name">{t('Bank Name')}</Label>
                 <Input
                   id="bank_name"
                   value={formData.bank_name}
-                  required
                   onChange={(e) => handleChange('bank_name', e.target.value)}
                   className={errors.bank_name ? 'border-red-500' : ''}
                 />
@@ -714,10 +719,9 @@ export default function EmployeeCreate() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="account_holder_name" required>{t('Account Holder Name')}</Label>
+                <Label htmlFor="account_holder_name">{t('Account Holder Name')}</Label>
                 <Input
                   id="account_holder_name"
-                  required
                   value={formData.account_holder_name}
                   onChange={(e) => handleChange('account_holder_name', e.target.value)}
                   className={errors.account_holder_name ? 'border-red-500' : ''}
@@ -726,11 +730,10 @@ export default function EmployeeCreate() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="account_number" required>{t('Account Number')}</Label>
+                <Label htmlFor="account_number">{t('Account Number')}</Label>
                 <Input
                   id="account_number"
                   value={formData.account_number}
-                  required
                   onChange={(e) => handleChange('account_number', e.target.value)}
                   className={errors.account_number ? 'border-red-500' : ''}
                 />
@@ -738,10 +741,9 @@ export default function EmployeeCreate() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="bank_identifier_code" required>{t('Bank Identifier Code (BIC/SWIFT)')}</Label>
+                <Label htmlFor="bank_identifier_code">{t('Bank Identifier Code (BIC/SWIFT)')}</Label>
                 <Input
                   id="bank_identifier_code"
-                  required
                   value={formData.bank_identifier_code}
                   onChange={(e) => handleChange('bank_identifier_code', e.target.value)}
                   className={errors.bank_identifier_code ? 'border-red-500' : ''}
@@ -750,11 +752,10 @@ export default function EmployeeCreate() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="bank_branch" required>{t('Bank Branch')}</Label>
+                <Label htmlFor="bank_branch">{t('Bank Branch')}</Label>
                 <Input
                   id="bank_branch"
                   value={formData.bank_branch}
-                  required
                   onChange={(e) => handleChange('bank_branch', e.target.value)}
                   className={errors.bank_branch ? 'border-red-500' : ''}
                 />

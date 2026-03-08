@@ -39,6 +39,7 @@ export default function SystemSettings({
     emailVerification: false,
     landingPageEnabled: true,
     ipRestrictionEnabled: false,
+    locationRestrictionEnabled: false,
     termsConditionsUrl: ''
   };
 
@@ -58,6 +59,7 @@ export default function SystemSettings({
     emailVerification: settingsData.emailVerification === 'true' || settingsData.emailVerification === true || defaultSettings.emailVerification,
     landingPageEnabled: settingsData.landingPageEnabled === 'true' || settingsData.landingPageEnabled === true || settingsData.landingPageEnabled === '1' || (settingsData.landingPageEnabled === undefined ? defaultSettings.landingPageEnabled : false),
     ipRestrictionEnabled: settingsData.ipRestrictionEnabled === '1' || settingsData.ipRestrictionEnabled === 1 || defaultSettings.ipRestrictionEnabled,
+    locationRestrictionEnabled: settingsData.locationRestrictionEnabled === '1' || settingsData.locationRestrictionEnabled === 1 || defaultSettings.locationRestrictionEnabled,
     termsConditionsUrl: settingsData.termsConditionsUrl || defaultSettings.termsConditionsUrl
   }));
 
@@ -76,6 +78,7 @@ export default function SystemSettings({
         emailVerification: mergedSettings.emailVerification === 'true' || mergedSettings.emailVerification === true || mergedSettings.emailVerification === '1',
         landingPageEnabled: mergedSettings.landingPageEnabled === 'true' || mergedSettings.landingPageEnabled === true || mergedSettings.landingPageEnabled === '1' || (mergedSettings.landingPageEnabled === undefined ? defaultSettings.landingPageEnabled : false),
         ipRestrictionEnabled: mergedSettings.ipRestrictionEnabled === '1' || mergedSettings.ipRestrictionEnabled === 1 || false,
+        locationRestrictionEnabled: mergedSettings.locationRestrictionEnabled === '1' || mergedSettings.locationRestrictionEnabled === 1 || false,
         termsConditionsUrl: mergedSettings.termsConditionsUrl || defaultSettings.termsConditionsUrl
       }));
     }
@@ -104,6 +107,7 @@ export default function SystemSettings({
       emailVerification: Boolean(systemSettings.emailVerification),
       landingPageEnabled: Boolean(systemSettings.landingPageEnabled),
       ipRestrictionEnabled: systemSettings.ipRestrictionEnabled ? 1 : 0,
+      locationRestrictionEnabled: systemSettings.locationRestrictionEnabled ? 1 : 0,
       termsConditionsUrl: systemSettings.termsConditionsUrl
     };
 
@@ -113,9 +117,10 @@ export default function SystemSettings({
       cleanSettings.landingPageEnabled = Boolean(systemSettings.landingPageEnabled);
     }
     
-    // IP Restriction is available for company users
+    // IP Restriction and Location Restriction are available for company users
     if (isCompanyUser) {
       cleanSettings.ipRestrictionEnabled = systemSettings.ipRestrictionEnabled ? 1 : 0;
+      cleanSettings.locationRestrictionEnabled = systemSettings.locationRestrictionEnabled ? 1 : 0;
     }
 
     // Submit to backend using Inertia
@@ -387,6 +392,21 @@ export default function SystemSettings({
                     id="ipRestrictionEnabled"
                     checked={systemSettings.ipRestrictionEnabled}
                     onCheckedChange={(checked) => handleSystemSettingsChange('ipRestrictionEnabled', checked)}
+                  />
+                </div>
+              </div>
+              <div className="grid gap-2 md:col-span-2">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label htmlFor="locationRestrictionEnabled">{t("Location Restriction")}</Label>
+                    <p className="text-sm text-muted-foreground">
+                      {t("Require staff to be within an allowed location to clock in/out")}
+                    </p>
+                  </div>
+                  <Switch
+                    id="locationRestrictionEnabled"
+                    checked={systemSettings.locationRestrictionEnabled}
+                    onCheckedChange={(checked) => handleSystemSettingsChange('locationRestrictionEnabled', checked)}
                   />
                 </div>
               </div>

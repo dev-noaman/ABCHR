@@ -14,7 +14,7 @@ function AuthSimpleLayout({ children, title, description }: PropsWithChildren<Au
             <div className="w-full">
                 <div className="flex flex-col gap-8">
                     <div className="flex flex-col items-center gap-4">
-                        <Link href={route('home')} className="flex flex-col items-center gap-2 font-medium">
+                        <Link href={route('landing')} className="flex flex-col items-center gap-2 font-medium">
                             <div className="mb-1 flex h-12 w-12 items-center justify-center rounded-md bg-white/80 shadow-sm p-2">
                                 <AppLogoIcon className="h-9 w-9 fill-current text-indigo-600" />
                             </div>

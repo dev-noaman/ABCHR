@@ -71,7 +71,18 @@ $opusJson = @'
       "Edit",
       "Write",
       "fetch",
-      "web_search"
+      "web_search",
+      "WebFetch",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "mcp__plugin_playwright_playwright__browser_console_messages",
+      "mcp__plugin_playwright_playwright__browser_network_requests",
+      "mcp__plugin_playwright_playwright__browser_wait_for",
+      "mcp__plugin_playwright_playwright__browser_fill_form",
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "mcp__plugin_playwright_playwright__browser_close"
     ]
   },
   "env": {}
@@ -79,7 +90,7 @@ $opusJson = @'
 '@
 $opusJson | Out-File -FilePath "$primaryDir\settings.json" -Encoding UTF8
 
-Write-Success "Written: $primaryDir\settings.json (Bash, Read, Edit, Write, fetch, web_search)"
+Write-Success "Written: $primaryDir\settings.json (Bash, Read, Edit, Write, fetch, web_search, WebFetch)"
 Write-Info "Uses Claude.ai browser auth - no API key stored."
 
 
@@ -96,7 +107,18 @@ $glmJson = @"
       "Edit",
       "Write",
       "fetch",
-      "web_search"
+      "web_search",
+      "WebFetch",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "mcp__plugin_playwright_playwright__browser_console_messages",
+      "mcp__plugin_playwright_playwright__browser_network_requests",
+      "mcp__plugin_playwright_playwright__browser_wait_for",
+      "mcp__plugin_playwright_playwright__browser_fill_form",
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "mcp__plugin_playwright_playwright__browser_close"
     ]
   },
   "env": {
@@ -110,7 +132,7 @@ $glmJson = @"
 "@
 $glmJson | Out-File -FilePath "$glmDir\settings.json" -Encoding UTF8
 
-Write-Success "Written: $glmDir\settings.json (Bash, Read, Edit, Write, fetch, web_search)"
+Write-Success "Written: $glmDir\settings.json (Bash, Read, Edit, Write, fetch, web_search, WebFetch)"
 Write-Info "Update model strings to glm-5 in the file above once Z.ai confirms the name."
 
 
@@ -127,7 +149,18 @@ $projectClaudeJson = @'
       "Edit",
       "Write",
       "fetch",
-      "web_search"
+      "web_search",
+      "WebFetch",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "mcp__plugin_playwright_playwright__browser_console_messages",
+      "mcp__plugin_playwright_playwright__browser_network_requests",
+      "mcp__plugin_playwright_playwright__browser_wait_for",
+      "mcp__plugin_playwright_playwright__browser_fill_form",
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "mcp__plugin_playwright_playwright__browser_close"
     ]
   }
 }
@@ -137,6 +170,49 @@ New-Item -ItemType Directory -Force -Path "$HOME\.claude-templates" | Out-Null
 $projectClaudeJson | Out-File -FilePath "$HOME\.claude-templates\.claude-settings.json" -Encoding UTF8
 
 Write-Success "Saved project .claude/settings.json template to ~/.claude-templates/"
+
+
+# -- Step 5c: Add WebFetch + MCP permissions to this project's .claude/settings.json if missing ─
+Write-Header "Step 5c: Current project .claude/settings.json (add WebFetch + MCP if missing)"
+$runDir = if ($PSScriptRoot) { $PSScriptRoot } else { Split-Path -Parent $MyInvocation.MyCommand.Path }
+$projectSettingsPath = Join-Path $runDir ".claude\settings.json"
+$permissionsToEnsure = @(
+    "WebFetch",
+    "mcp__plugin_playwright_playwright__browser_navigate",
+    "mcp__plugin_playwright_playwright__browser_click",
+    "mcp__plugin_context7_context7__resolve-library-id",
+    "mcp__plugin_context7_context7__query-docs",
+    "mcp__plugin_playwright_playwright__browser_console_messages",
+    "mcp__plugin_playwright_playwright__browser_network_requests",
+    "mcp__plugin_playwright_playwright__browser_wait_for",
+    "mcp__plugin_playwright_playwright__browser_fill_form",
+    "mcp__plugin_playwright_playwright__browser_snapshot",
+    "mcp__plugin_playwright_playwright__browser_close"
+)
+if (Test-Path $projectSettingsPath) {
+    try {
+        $projectSettings = Get-Content $projectSettingsPath -Raw -Encoding UTF8 | ConvertFrom-Json
+        $allow = [System.Collections.ArrayList]@($projectSettings.permissions.allow)
+        $added = @()
+        foreach ($perm in $permissionsToEnsure) {
+            if ($allow -notcontains $perm) {
+                $allow.Add($perm) | Out-Null
+                $added += $perm
+            }
+        }
+        if ($added.Count -gt 0) {
+            $projectSettings.permissions.allow = @($allow)
+            $projectSettings | ConvertTo-Json -Depth 5 | Set-Content $projectSettingsPath -Encoding UTF8 -NoNewline
+            Write-Success "Added to $projectSettingsPath : $($added -join ', ')"
+        } else {
+            Write-Info "WebFetch + MCP permissions already present - skipped."
+        }
+    } catch {
+        Write-Err "Could not update project settings: $_"
+    }
+} else {
+    Write-Info "No .claude/settings.json in current project - skip."
+}
 
 
 # -- Step 6: Save global CLAUDE.md template to user home ─────

@@ -52,11 +52,16 @@ export interface BrandSettings {
   themeMode: Appearance;
 }
 
+// Legacy logo paths that don't exist - fallback to /logo.svg
+const LEGACY_LOGO_PATHS = ['logo/logo-dark.png', 'logo/logo-light.png', 'logo/favicon.png'];
+const normalizeLogo = (path: string | undefined, defaultVal: string) =>
+  !path || LEGACY_LOGO_PATHS.includes(path) ? defaultVal : path;
+
 // Default brand settings
 export const DEFAULT_BRAND_SETTINGS: BrandSettings = {
-  logoDark: 'logo/logo-dark.png',
-  logoLight: 'logo/logo-light.png',
-  favicon: 'logo/favicon.png',
+  logoDark: '/logo.svg',
+  logoLight: '/logo.svg',
+  favicon: '/logo.svg',
   titleText: 'WorkDo',
   footerText: '© 2024 WorkDo. All rights reserved.',
   companyMobile: '',
@@ -85,9 +90,9 @@ export const getBrandSettings = (userSettings?: Record<string, string>, globalSe
       const parsedBrand = brandSettings ? JSON.parse(brandSettings) : {};
 
       return {
-        logoDark: parsedBrand.logoDark || userSettings?.logoDark || DEFAULT_BRAND_SETTINGS.logoDark,
-        logoLight: parsedBrand.logoLight || userSettings?.logoLight || DEFAULT_BRAND_SETTINGS.logoLight,
-        favicon: parsedBrand.favicon || userSettings?.favicon || DEFAULT_BRAND_SETTINGS.favicon,
+        logoDark: normalizeLogo(parsedBrand.logoDark || userSettings?.logoDark, DEFAULT_BRAND_SETTINGS.logoDark),
+        logoLight: normalizeLogo(parsedBrand.logoLight || userSettings?.logoLight, DEFAULT_BRAND_SETTINGS.logoLight),
+        favicon: normalizeLogo(parsedBrand.favicon || userSettings?.favicon, DEFAULT_BRAND_SETTINGS.favicon),
         titleText: parsedBrand.titleText || userSettings?.titleText || DEFAULT_BRAND_SETTINGS.titleText,
         footerText: parsedBrand.footerText || userSettings?.footerText || DEFAULT_BRAND_SETTINGS.footerText,
         companyMobile: parsedBrand.companyMobile || userSettings?.companyMobile || DEFAULT_BRAND_SETTINGS.companyMobile,
@@ -106,9 +111,9 @@ export const getBrandSettings = (userSettings?: Record<string, string>, globalSe
   // If we have settings from the backend, use those (non-demo mode)
   if (userSettings) {
     return {
-      logoDark: userSettings.logoDark || DEFAULT_BRAND_SETTINGS.logoDark,
-      logoLight: userSettings.logoLight || DEFAULT_BRAND_SETTINGS.logoLight,
-      favicon: userSettings.favicon || DEFAULT_BRAND_SETTINGS.favicon,
+      logoDark: normalizeLogo(userSettings.logoDark, DEFAULT_BRAND_SETTINGS.logoDark),
+      logoLight: normalizeLogo(userSettings.logoLight, DEFAULT_BRAND_SETTINGS.logoLight),
+      favicon: normalizeLogo(userSettings.favicon, DEFAULT_BRAND_SETTINGS.favicon),
       titleText: userSettings.titleText || DEFAULT_BRAND_SETTINGS.titleText,
       footerText: userSettings.footerText || DEFAULT_BRAND_SETTINGS.footerText,
       companyMobile: userSettings.companyMobile || DEFAULT_BRAND_SETTINGS.companyMobile,

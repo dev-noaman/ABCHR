@@ -1001,7 +1001,7 @@ export function AppSidebar() {
                                         key={`${currentLogo}-${Date.now()}`}
                                         src={displayUrl}
                                         alt="Logo"
-                                        className="w-auto transition-all duration-200"
+                                        className="h-10 w-auto transition-all duration-200"
                                         onError={() => updateBrandSettings({ [isDark ? 'logoLight' : 'logoDark']: '' })}
                                     />
                                 ) : (
