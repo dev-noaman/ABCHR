@@ -1,0 +1,64 @@
+# Phase 1: Backend Core - app/Http, config, routes (~199 files)
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: en-US
+early_access: false
+reviews:
+  profile: chill
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  path_filters:
+    - '!node_modules/**'
+    - '!vendor/**'
+    - '!dist/**'
+    - '!build/**'
+    - '!*.min.js'
+    - '!*.min.css'
+    - '!package-lock.json'
+    - '!composer.lock'
+    - '!Adel/**'
+    - '!.playwright-cli/**'
+    - '!.cursor/**'
+    - '!.claude/**'
+    - '!.agents/**'
+    - '!main-file/**'
+    - '!**/*.log'
+    - '!**/*.zip'
+    - '!**/*.dll'
+    - '!**/*.png'
+    - '!**/*.db'
+    - '!database/**'
+    - '!app/Models/**'
+    - '!app/Libraries/**'
+    - '!app/Services/**'
+    - '!app/Providers/**'
+    - '!app/Console/**'
+    - '!app/Observers/**'
+    - '!app/Helpers/**'
+    - '!app/Traits/**'
+    - '!app/PathGenerators/**'
+    - '!app/Events/**'
+    - '!app/Listeners/**'
+    - '!app/Mail/**'
+    - '!resources/**'
+    - '!public/**'
+    - '!tests/**'
+    - '!.specify/**'
+    - '!read/**'
+    - '!storage/**'
+    - '!bootstrap/**'
+  auto_review:
+    enabled: true
+    drafts: false
+    # Enable reviews when base is empty-for-review (non-default branch)
+    base_branches:
+      - 'empty-for-review'
+  tools:
+    biome:
+      enabled: true
+    shellcheck:
+      enabled: true
+    yamllint:
+      enabled: true
