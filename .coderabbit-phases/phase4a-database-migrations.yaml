@@ -42,6 +42,8 @@ reviews:
   auto_review:
     enabled: true
     drafts: false
+    base_branches:
+      - 'empty-for-review'
   tools:
     biome:
       enabled: true
