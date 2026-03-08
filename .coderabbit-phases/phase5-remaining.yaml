@@ -1,4 +1,4 @@
-# Phase 3: Frontend - resources/js, views, css (~250 files)
+# Phase 5: Remaining - public, tests, root configs (~70 files)
 # Copy to .coderabbit.yaml, commit, push main, comment @coderabbitai full review
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 language: en-US
@@ -30,14 +30,9 @@ reviews:
     - '!**/*.dll'
     - '!**/*.png'
     - '!**/*.db'
-    # Phase 3: resources - exclude app, database, etc.
-    - '!database/**'
     - '!app/**'
-    - '!resources/lang/**'
-    - '!public/**'
-    - '!tests/**'
-    - '!.specify/**'
-    - '!read/**'
+    - '!resources/**'
+    - '!database/**'
     - '!storage/**'
     - '!bootstrap/**'
   auto_review:

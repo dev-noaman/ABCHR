@@ -1,4 +1,4 @@
-# Phase 4: Database - migrations, seeders (~215 files)
+# Phase 3a: Frontend - resources/js/pages (~186 files)
 # Copy to .coderabbit.yaml, commit, push main, comment @coderabbitai full review
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 language: en-US
@@ -30,15 +30,27 @@ reviews:
     - '!**/*.dll'
     - '!**/*.png'
     - '!**/*.db'
-    # Phase 4: database only
+    - '!database/**'
     - '!app/**'
-    - '!resources/**'
+    - '!resources/lang/**'
     - '!public/**'
     - '!tests/**'
     - '!.specify/**'
     - '!read/**'
     - '!storage/**'
     - '!bootstrap/**'
+    # Phase 3a: only resources/js/pages - exclude other resources
+    - '!resources/js/components/**'
+    - '!resources/js/utils/**'
+    - '!resources/js/hooks/**'
+    - '!resources/js/config/**'
+    - '!resources/js/layouts/**'
+    - '!resources/js/types/**'
+    - '!resources/js/contexts/**'
+    - '!resources/js/helpers/**'
+    - '!resources/js/lib/**'
+    - '!resources/views/**'
+    - '!resources/css/**'
   auto_review:
     enabled: true
     drafts: false
