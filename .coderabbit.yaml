@@ -52,7 +52,6 @@ reviews:
   auto_review:
     enabled: true
     drafts: false
-    # Enable reviews when base is empty-for-review (non-default branch)
     base_branches:
       - 'empty-for-review'
   tools:
