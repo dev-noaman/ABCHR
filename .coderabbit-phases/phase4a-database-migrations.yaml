@@ -1,4 +1,4 @@
-# Phase 1: Backend Core - app/Http, config, routes (~199 files)
+# Phase 4a: Database - migrations only (~117 files)
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 language: en-US
 early_access: false
@@ -29,20 +29,10 @@ reviews:
     - '!**/*.dll'
     - '!**/*.png'
     - '!**/*.db'
-    - '!database/**'
-    - '!app/Models/**'
-    - '!app/Libraries/**'
-    - '!app/Services/**'
-    - '!app/Providers/**'
-    - '!app/Console/**'
-    - '!app/Observers/**'
-    - '!app/Helpers/**'
-    - '!app/Traits/**'
-    - '!app/PathGenerators/**'
-    - '!app/Events/**'
-    - '!app/Listeners/**'
-    - '!app/Mail/**'
+    - '!app/**'
     - '!resources/**'
+    - '!database/seeders/**'
+    - '!database/factories/**'
     - '!public/**'
     - '!tests/**'
     - '!.specify/**'

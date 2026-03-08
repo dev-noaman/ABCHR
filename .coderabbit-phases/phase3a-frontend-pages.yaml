@@ -1,4 +1,4 @@
-# Phase 1: Backend Core - app/Http, config, routes (~199 files)
+# Phase 3a: Frontend - resources/js/pages (~186 files)
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 language: en-US
 early_access: false
@@ -30,25 +30,25 @@ reviews:
     - '!**/*.png'
     - '!**/*.db'
     - '!database/**'
-    - '!app/Models/**'
-    - '!app/Libraries/**'
-    - '!app/Services/**'
-    - '!app/Providers/**'
-    - '!app/Console/**'
-    - '!app/Observers/**'
-    - '!app/Helpers/**'
-    - '!app/Traits/**'
-    - '!app/PathGenerators/**'
-    - '!app/Events/**'
-    - '!app/Listeners/**'
-    - '!app/Mail/**'
-    - '!resources/**'
+    - '!app/**'
+    - '!resources/lang/**'
     - '!public/**'
     - '!tests/**'
     - '!.specify/**'
     - '!read/**'
     - '!storage/**'
     - '!bootstrap/**'
+    - '!resources/js/components/**'
+    - '!resources/js/utils/**'
+    - '!resources/js/hooks/**'
+    - '!resources/js/config/**'
+    - '!resources/js/layouts/**'
+    - '!resources/js/types/**'
+    - '!resources/js/contexts/**'
+    - '!resources/js/helpers/**'
+    - '!resources/js/lib/**'
+    - '!resources/views/**'
+    - '!resources/css/**'
   auto_review:
     enabled: true
     drafts: false
