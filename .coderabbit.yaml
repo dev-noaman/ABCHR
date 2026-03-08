@@ -1,4 +1,4 @@
-# Phase 1: Backend Core - app/Http, config, routes (~199 files)
+﻿# Phase 1: Backend Core - app/Http, config, routes (~199 files)
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 language: en-US
 early_access: false
@@ -61,3 +61,4 @@ reviews:
       enabled: true
     yamllint:
       enabled: true
+
